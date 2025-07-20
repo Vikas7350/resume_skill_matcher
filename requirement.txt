@@ -1,1 +1,10 @@
+Flask
+gunicorn
+openai
+sentence-transformers
+scikit-learn
+fuzzywuzzy
+python-Levenshtein
+spacy
+supabase
 
