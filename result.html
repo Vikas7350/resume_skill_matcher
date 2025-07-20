@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Matching Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eef1f8;
+            margin: 0;
+            padding: 30px;
+            color: #2c3e50;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #1a202c;
+        }
+        .container {
+            max-width: 950px;
+            margin: auto;
+        }
+        .section {
+            background-color: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+        .section:hover {
+            transform: translateY(-4px);
+        }
+        .section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #34495e;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        ul li {
+            margin-bottom: 6px;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: #1e90ff;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .back-button:hover {
+            background-color: #0b68c3;
+            transform: scale(1.05);
+        }
+
+        /* Chatbox Styling */
+        #chatbox {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            background-color: #fff;
+            border: 1px solid #dce3f0;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            padding: 20px;
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        #chatbox h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        #messages {
+            height: 200px;
+            overflow-y: auto;
+            background: #f6f9fc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        #messages div {
+            margin-bottom: 8px;
+        }
+        .user-msg {
+            text-align: right;
+            color: #2c3e50;
+        }
+        .bot-msg {
+            text-align: left;
+            color: #1e88e5;
+        }
+        #userInput {
+            width: 70%;
+            padding: 10px;
+            font-size: 0.95rem;
+            border: 1px solid #ccd6e0;
+            border-radius: 6px;
+        }
+        button {
+            padding: 10px 16px;
+            background-color: #1e90ff;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        button:hover {
+            background-color: #0b68c3;
+        }
+
+        @media screen and (max-width: 600px) {
+            #chatbox {
+                width: 90%;
+                right: 5%;
+                bottom: 15px;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Resume Match Result: {{ company }}</h2>
+
+        <div class="section">
+            <h3>✅ Resume Skills</h3>
+            <ul>
+                {% for skill in resume_skills %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📋 Job Description Skills</h3>
+            <ul>
+                {% for skill in jd_skills %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 Similarity Score</h3>
+            <p><strong>{{ similarity }}%</strong></p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ Missing Skills</h3>
+            <ul>
+                {% if missing %}
+                    {% for skill in missing %}
+                        <li>{{ skill }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>No major skills missing. Excellent match! 🎯</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <a href="/" class="back-button">⬅ Back to Home</a>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbox">
+        <h3>Resume Feedback Chat 🤖</h3>
+        <div id="messages"></div>
+        <div style="display: flex; align-items: center;">
+            <input type="text" id="userInput" placeholder="Ask something..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById("userInput").value.trim();
+            if (!input) return;
+
+            const messages = document.getElementById("messages");
+            messages.innerHTML += `<div class="user-msg"><b>You:</b> ${input}</div>`;
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ message: input })
+                });
+                const data = await response.json();
+                messages.innerHTML += `<div class="bot-msg"><b>Bot:</b> ${data.reply}</div>`;
+                messages.scrollTop = messages.scrollHeight;
+            } catch (error) {
+                messages.innerHTML += `<div class="bot-msg">⚠️ Error getting response.</div>`;
+            }
+
+            document.getElementById("userInput").value = "";
+        }
+
+        document.getElementById("userInput").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                sendMessage();
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>

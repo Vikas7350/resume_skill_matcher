@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Job Description</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #1a202c;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        label {
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.03);
+        }
+
+        .success-message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e6fff6;
+            color: #047857;
+            border-left: 4px solid #10b981;
+            border-radius: 6px;
+            font-weight: 500;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeInMessage 0.5s ease forwards;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 10px 24px;
+            background-color: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #4b5563;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            form {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h2>{{ company }} – Upload Job Description</h2>
+
+    {% if success %}
+    <div class="success-message">{{ success }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <label for="jd">Paste Job Description:</label>
+        <textarea name="jd" id="jd" required placeholder="Paste the full job description here..."></textarea>
+        <input type="submit" value="Upload">
+    </form>
+
+    <button onclick="history.back()">⬅ Back</button>
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', () => {
+            const submitBtn = form.querySelector('input[type="submit"]');
+            submitBtn.value = 'Uploading...';
+            submitBtn.disabled = true;
+        });
+
+        window.addEventListener('load', () => {
+            const submitBtn = document.querySelector('input[type="submit"]');
+            submitBtn.value = 'Upload';
+            submitBtn.disabled = false;
+        });
+    </script>
+</body>
+</html>

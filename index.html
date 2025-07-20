@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Matcher</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #1a202c;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        h2 {
+            color: #2d3748;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        select, input[type="file"], input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.03);
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #4b5563;
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            form {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h2>Resume Skill Matcher</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="company">Select Company:</label>
+        <select name="company" id="company" required>
+            {% for company in companies %}
+            <option value="{{ company }}">{{ company }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="resume">Upload Resume (Text File):</label>
+        <input type="file" name="resume" id="resume" accept=".txt" required>
+
+        <input type="submit" value="Compare Skills">
+    </form>
+
+    <p>
+        Want to register your company? <a href="{{ url_for('company_register') }}">Click here</a>
+    </p>
+    <p>
+        Already registered? <a href="{{ url_for('company_login') }}">Company Login</a>
+    </p>
+
+    <button onclick="history.back()">🔙 Back</button>
+
+    <script>
+        // Submit animation
+        const form = document.querySelector('form');
+        form.addEventListener('submit', () => {
+            const submitButton = form.querySelector('input[type="submit"]');
+            submitButton.value = 'Processing...';
+            submitButton.disabled = true;
+        });
+
+        // Reset on reload
+        window.addEventListener('load', () => {
+            const submitButton = form.querySelector('input[type="submit"]');
+            submitButton.value = 'Compare Skills';
+            submitButton.disabled = false;
+        });
+    </script>
+</body>
+</html>

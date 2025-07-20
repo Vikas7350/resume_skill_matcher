@@ -1,0 +1,62 @@
+Niranjan Shinde
+Email: niranjan.shinde@example.com | Phone: +91-9876543210
+
+LinkedIn: linkedin.com/in/niranjan-shinde | GitHub: github.com/niranjanshinde Portfolio: niranjanshinde.dev
+Objective
+
+Aspiring computer engineer with a strong interest in web technologies, cybersecurity, and smart systems. Eager to contribute to impactful projects and continually learn through hands-on development.
+Education
+
+MIT Academy of Engineering, Alandi, Pune
+
+BTech in Computer Engineering | 2024 - 2028 | CGPA: 8.6/10
+
+Skills
+
+- Languages: C, Python, JavaScript
+
+- Web Development: HTML, CSS, React.js
+
+- Tools & Platforms: Git, Linux, Firebase, SQLite, Node.js
+
+Certifications
+
+- Linux Fundamentals - Great Learning
+
+- Kali Linux for Beginners - Udemy
+
+- IYMC Math Challenge - Finalist
+
+- SAAS Hackathon - Participant
+
+Projects
+
+1. Smart Attendance System with Face Recognition
+
+   Built a face recognition-based attendance platform with dashboards for students and admins, using OpenCV and Python.
+
+
+2. ScrapEase (Scrap Management Website)
+
+Designed a Node.js and SQLite-backed website to upload, manage, and view categorized scrap
+
+images (metal/non-metal).
+
+
+
+3. Portfolio Website
+
+  Created a personal website showcasing projects, skills, and certifications with a responsive UI using HTML, CSS, and JavaScript.
+Hackathons & Activities
+
+- SAAS National Hackathon - Participated in building a smart attendance prototype.
+
+- College Mini-Project Showcase - Runner-up for ScrapEase.
+
+Hobbies & Interests
+
+- Coding and Competitive Programming
+
+- Reading Tech Blogs
+
+- Traveling & Photography

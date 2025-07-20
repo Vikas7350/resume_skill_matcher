@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Company</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #1a202c;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        label {
+            font-weight: 500;
+            color: #4a5568;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.03);
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            animation: fadeInMessage 0.5s ease forwards;
+        }
+
+        .error {
+            background-color: #fee2e2;
+            color: #dc2626;
+            border-left: 4px solid #f87171;
+        }
+
+        .success {
+            background-color: #e6fff6;
+            color: #047857;
+            border-left: 4px solid #10b981;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #4b5563;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            form {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            textarea {
+                min-height: 100px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h2>Register Your Company</h2>
+
+    {% if error %}
+        <div class="message error">{{ error }}</div>
+    {% elif success %}
+        <div class="message success">{{ success }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <label>Company Name:</label>
+        <input type="text" name="new_company" placeholder="Enter company name" required>
+
+        <label>Password:</label>
+        <input type="password" name="new_password" placeholder="Create a secure password" required>
+
+        <label>Initial Job Description:</label>
+        <textarea name="jd" placeholder="Paste the job description for the first role" required></textarea>
+
+        <input type="submit" value="Register & Upload JD">
+    </form>
+
+    <button onclick="history.back()">⬅ Back</button>
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', () => {
+            const submitBtn = form.querySelector('input[type="submit"]');
+            submitBtn.value = 'Registering...';
+            submitBtn.disabled = true;
+        });
+
+        window.addEventListener('load', () => {
+            const submitBtn = document.querySelector('input[type="submit"]');
+            submitBtn.value = 'Register & Upload JD';
+            submitBtn.disabled = false;
+        });
+    </script>
+</body>
+</html>

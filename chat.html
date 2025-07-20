@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Feedback Chatbot</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f7fc;
+            color: #1a202c;
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .chat-box {
+            max-width: 700px;
+            width: 100%;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .chat-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        label {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            transform: scale(1.01);
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+        .answer {
+            background: #e6f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeInMessage 0.5s ease forwards;
+        }
+        .answer strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+        .error {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInMessage 0.5s ease forwards;
+        }
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            .chat-box {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            textarea {
+                height: 100px;
+            }
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInMessage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .chat-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-box">
+        <h2>💬 Resume Feedback Chatbot</h2>
+        <form method="POST" action="{{ url_for('chat') }}">
+            <label for="question">Ask a question about your resume:</label>
+            <textarea name="question" placeholder="e.g., What skills am I missing for this job?" required></textarea>
+            <br>
+            <button type="submit">Ask</button>
+        </form>
+
+        {% if answer %}
+            <div class="answer">
+                <strong>🧠 GPT Response:</strong>
+                <p>{{ answer }}</p>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error">
+                ⚠️ {{ error }}
+            </div>
+        {% endif %}
+
+        <a href="{{ url_for('compare') }}" class="back-link">⬅️ Back to Comparison</a>
+    </div>
+
+    <script>
+        // Add subtle form interaction feedback
+        const form = document.querySelector('form');
+        form.addEventListener('submit', () => {
+            const submitButton = form.querySelector('button');
+            submitButton.textContent = 'Processing...';
+            submitButton.disabled = true;
+        });
+
+        // Reset submit button on page load to handle back navigation
+        window.addEventListener('load', () => {
+            const submitButton = form.querySelector('button');
+            submitButton.textContent = 'Ask';
+            submitButton.disabled = false;
+        });
+    </script>
+</body>
+</html>

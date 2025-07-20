@@ -1,0 +1,18 @@
+We are looking for a Data Analyst with a strong background in data processing and visualization.
+
+Required Skills:
+- Python
+- SQL
+- Excel
+- Power BI or Tableau
+- Data Cleaning
+- Data Visualization
+- Communication Skills
+- Problem Solving
+- Teamwork
+
+Good to Have:
+- JavaScript
+- HTML & CSS
+- Machine Learning Basics
+- Git for version control
